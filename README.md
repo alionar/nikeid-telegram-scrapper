@@ -33,7 +33,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   * `TELEGRAM_CHAT_ID` : Your Telegram Channel Chat ID
   * `SHEET_ID`: Your Spreadsheet ID
 
-## So What's Next?
+## Run It!
 1. Download this script using Terminal/Command Line.
   ```
   # Clone
