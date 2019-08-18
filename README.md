@@ -3,8 +3,7 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
 
 ## What to Prepare First?
 1. Install Python => 3.6
-2. Install dependencies. 
-  > `pip install -r  requirements.txt`
+2. Install dependencies `pip install -r  requirements.txt`
 3. Create Telegram bot to get token. [How?](https://core.telegram.org/bots#6-botfather).
 4. Make new Telegram channel and add your bot to channel. [How?](https://telegram.org/faq_channels#q-what-39s-a-channel)
 5. Get your Telegram channel Chat ID. [How?](https://github.com/GabrielRF/telegram-id)
@@ -35,7 +34,9 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
 
 ## So What's Next?
 1. Download this script using Terminal/Command Line
-  ```git clone https://github.com/alionar/nikeid-telegram-scrapper.git
+  ```
+  git clone https://github.com/alionar/nikeid-telegram-scrapper.git
   cd nikeid-telegram-scrapper
   ```
 2. For running it automatically, use cron job on Linux or another job scheduller to run it daily.
+  `python nikeid-telegram-scrapper.py`
