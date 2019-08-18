@@ -1,5 +1,5 @@
 # nikeid-telegram-scrapper
-Get Daily Reminder about AJ1 High Stock on Nike ID Store via Telegram Channel
+Get Daily Reminder about **AJ1 High** Stock on Nike ID Store via Telegram Channel
 
 ## What to Prepare First
 1. Install Python => 3.6
