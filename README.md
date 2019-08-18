@@ -42,7 +42,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   # Get File Path
   # for Linux/MacOS
   pwd
-  # For Windows
+  # for Windows
   cd 
   ```
 2. Use cron job on your Linux server or another job scheduller to run this command once a day.
