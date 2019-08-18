@@ -1,5 +1,5 @@
 # nikeid-telegram-scrapper
-Get daily reminder about certain Nike shoes stock on Nike ID Store via Telegram Channel
+Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www.nike.com/id/w?q=&vst=) via Telegram Channel
 
 ## What to Prepare First?
 1. Install Python => 3.6
