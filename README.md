@@ -48,11 +48,11 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   ```
 2. Use cron job on your Linux server or another job scheduller to run this command once a day.
   ```
-  python nikeid-telegram-scrapper.py
+  python3 nikeid-telegram-scrapper.py
   ```
   For example, i set up my crontab to run that command with this [expression](https://crontab.guru/#0_14_*_*_*):
   ```
-  0 14 * * * python nikeid-telegram-scrapper.py
+  0 14 * * * python3 nikeid-telegram-scrapper.py
   ```
   This command will be running everyday at 14:00 CEST (19:00 GMT+7, based on your server timezone)
   
