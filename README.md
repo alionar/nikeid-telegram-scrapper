@@ -40,8 +40,10 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   cd nikeid-telegram-scrapper
   
   # Get File Path
-  pwd # for Linux/MacOS
-  cd # For Windows
+  # for Linux/MacOS
+  pwd
+  # For Windows
+  cd 
   ```
 2. Use cron job on your Linux server or another job scheduller to run this command once a day.
   ```
