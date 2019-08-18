@@ -33,7 +33,7 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
   * `SHEET_ID`: Your Spreadsheet ID
 
 ## So What's Next?
-1. Download this script using Terminal/Command Line
+1. Download this script using Terminal/Command Line.
   ```
   git clone https://github.com/alionar/nikeid-telegram-scrapper.git
   cd nikeid-telegram-scrapper
@@ -42,3 +42,4 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
   ```
   python nikeid-telegram-scrapper.py
   ```
+3. Profit.
