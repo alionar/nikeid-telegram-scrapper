@@ -50,4 +50,9 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   ```
   python nikeid-telegram-scrapper.py
   ```
+  For example, i set up my cron to run that command with this [expression](https://crontab.guru/#0_14_*_*_*):
+  ```
+  0 14 * * * python nikeid-telegram-scrapper.py
+  ```
+  This command will be running at 14:00 UTC everyday.
 3. Profit.
