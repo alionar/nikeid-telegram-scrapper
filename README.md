@@ -35,8 +35,13 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 ## So What's Next?
 1. Download this script using Terminal/Command Line.
   ```
+  # Clone
   git clone https://github.com/alionar/nikeid-telegram-scrapper.git
   cd nikeid-telegram-scrapper
+  
+  # Get File Path
+  pwd # for Linux/MacOS
+  cd # For Windows
   ```
 2. Use cron job on your Linux server or another job scheduller to run this command once a day.
   ```
