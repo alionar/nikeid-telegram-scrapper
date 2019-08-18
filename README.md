@@ -39,4 +39,6 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
   cd nikeid-telegram-scrapper
   ```
 2. For running it automatically, use cron job on Linux or another job scheduller to run it daily.
-  `python nikeid-telegram-scrapper.py`
+  ```
+  python nikeid-telegram-scrapper.py
+  ```
