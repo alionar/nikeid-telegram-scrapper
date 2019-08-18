@@ -26,7 +26,7 @@ Get Daily Reminder about certain Nike shoes stock on Nike ID Store via Telegram 
   }
   ```
   Edit this file with:
-  * `CWD` : Current Working Directory. Change it with this repo [absolute file path](https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths) folder in your computer (when you clone it).
+  * `CWD` : Current Working Directory. Change it with this repo [absolute file path](https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths) folder in your computer after cloning this repo (see below).
   * `URL_SEARCH` : URL Search for any Nike shoes available on Nike Store Indonesia. You can change it with another shoes.
   * `TELEGRAM_TOKEN` : Your Telegram Bot Token
   * `TELEGRAM_CHAT_ID` : Your Telegram Channel Chat ID
