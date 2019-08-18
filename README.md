@@ -54,6 +54,6 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   ```
   0 14 * * * python nikeid-telegram-scrapper.py
   ```
-  This command will be running everyday at 14:00 UTC (19:00 GMT+7).
+  This command will be running everyday at 14:00 CEST (19:00 GMT+7, based on your server timezone)
   
 3. Profit.
