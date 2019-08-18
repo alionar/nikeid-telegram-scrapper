@@ -10,7 +10,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 6. Get Service Account on GCP and save it as `client_secret.json` in this repo folder. [How?](https://developers.google.com/identity/protocols/OAuth2ServiceAccount#creatinganaccount)
 7. Enable Google Drive API and Sheet API for your project account on GCP. [How?](https://support.google.com/googleapi/answer/6158841?hl=en)
 8. Create [New Google Spreadsheet](https://docs.google.com/spreadsheets/u/0/) and delete all row except first one and then edit cell A1 and insert `--END--`.
-9. Find the  client_email inside client_secret.json. Back in your spreadsheet, click the Share button in the top right, and paste the client email into the People field to give it edit rights. Hit Send.
+9. Find the `client_email` inside client_secret.json. Back in your spreadsheet, click the Share button in the top right, and paste the `client_email` value into the People field to give it edit rights. Hit Send.
 10. Get `sheet_id` from spreadsheet that you already made before. [How?](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id)
 11. Create `config.json` and put in this repo folder. Use this template:
   ```
