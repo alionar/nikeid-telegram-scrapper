@@ -12,7 +12,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 8. Create [New Google Spreadsheet](https://docs.google.com/spreadsheets/u/0/) and delete all row except first one and then edit cell A1 and insert `--END--`.
 9. Copy the `client_email` inside `client_secret.json`. Back in your spreadsheet, click the Share button in the top right, and paste the `client_email` value into the People field to give it edit rights. Hit Send.
 10. Get `sheet_id` from spreadsheet that you already made before. [How?](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id)
-11. Open and change variable value in `_config.py` with yours.
+11. Open and change variable value in `_config.py`.
   ```
  URL_SEARCH = 'https://www.nike.com/id/w/jordan-1-lifestyle-high-top-shoes-13jrmz4fokyz6lqy0zy7ok'
  TELEGRAM_TOKEN = '<YOUR_BOT_TOKEN'
