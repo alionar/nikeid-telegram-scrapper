@@ -18,6 +18,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
  TELEGRAM_TOKEN = '<YOUR_BOT_TOKEN'
  TELEGRAM_CHAT_ID = <YOUR_TELEGRAM_CHANNEL_CHAT_ID> #integer
  SHEET_ID  = '<YOUR_SPREADSHEET_ID>'
+ TZ_NAME = '<YOUR_TIMEZONE>'
   ```
   Edit this file with:
   * `CWD` : Current Working Directory. Change it with this repo [absolute file path](https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths) folder in your computer after cloning this repo (see [here](https://github.com/alionar/nikeid-telegram-scrapper/blob/master/README.md#run-it) how to clone).
@@ -25,6 +26,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   * `TELEGRAM_TOKEN` : Your Telegram Bot Token
   * `TELEGRAM_CHAT_ID` : Your Telegram Channel Chat ID
   * `SHEET_ID`: Your Spreadsheet ID
+  * `TZ_NAME`:  Your Timezone based on [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
 
 ## Run It!
 1. Download this script using Terminal/Command Line.
