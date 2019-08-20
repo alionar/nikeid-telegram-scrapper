@@ -19,6 +19,7 @@ url_search = URL_SEARCH
 token = TELEGRAM_TOKEN
 chat_id = TELEGRAM_CHAT_ID
 sheet_id = SHEET_ID
+cwd = os.getcwd()
 
 # FUNCTION
 def parsingSearchResult_v1(getResultPage):
@@ -110,7 +111,7 @@ def send_channel(list_of_result):
 def save_sheet(list_of_result):
     print("Saving to sheet...")
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('{}/client_secret.json'.format(cwd), scope)
     gc = gspread.authorize(creds)
     
     data = pd.DataFrame(list_of_result, columns=['date', 'product_name','category', 'status', 'color', 'price', 'price_before', 'link'])
