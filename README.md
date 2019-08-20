@@ -15,7 +15,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 11. Open and change variable value in `_config.py`.
   ```
  URL_SEARCH = 'https://www.nike.com/id/w/jordan-1-lifestyle-high-top-shoes-13jrmz4fokyz6lqy0zy7ok'
- TELEGRAM_TOKEN = '<YOUR_BOT_TOKEN'
+ TELEGRAM_TOKEN = '<YOUR_TELEGRAM_BOT_TOKEN>'
  TELEGRAM_CHAT_ID = <YOUR_TELEGRAM_CHANNEL_CHAT_ID> #integer
  SHEET_ID  = '<YOUR_SPREADSHEET_ID>'
  TZ_NAME = '<YOUR_TIMEZONE>'
