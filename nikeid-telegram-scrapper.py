@@ -1,3 +1,4 @@
+from _config import *
 import bs4
 import requests
 import telegram
@@ -13,22 +14,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 # SET LOCAL DATETIME: GMT +7
 my_date = datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
 
-# LOAD CONFIG FILE
-file_config = open("config.json")
-config = json.load(file_config)
-
-# SET CWD
-os.chdir(config["CWD"])
-
-# SET URL LINK SEARCH: AIR JORDAN 1 HIGH
-url_search = config["URL_SEARCH"]
-
-# TELEGRAM CONFIG
-token = config["TELEGRAM"]["TOKEN"]
-chat_id = config["TELEGRAM"]["CHAT_ID"]
-
-# SHEET ID
-sheet_id = config["SHEET"]["ID"]
+# _CONFIG.PY
+url_search = URL_SEARCH
+token = TELEGRAM_TOKEN
+chat_id = TELEGRAM_CHAT_ID
+sheet_id = SHEET_ID
 
 # FUNCTION
 def parsingSearchResult_v1(getResultPage):
