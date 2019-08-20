@@ -4,3 +4,4 @@ URL_SEARCH = 'https://www.nike.com/id/w/jordan-1-lifestyle-high-top-shoes-13jrmz
 TELEGRAM_TOKEN = ''
 TELEGRAM_CHAT_ID =  #integer
 SHEET_ID  = ''
+TZ_NAME  = '' 

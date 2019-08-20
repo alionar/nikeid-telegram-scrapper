@@ -12,7 +12,7 @@ import gspread_dataframe as gd
 from oauth2client.service_account import ServiceAccountCredentials
 
 # SET LOCAL DATETIME: GMT +7
-my_date = datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+my_date = datetime.datetime.now(pytz.timezone('{}'.format(TZ_NAME)))
 
 # _CONFIG.PY
 url_search = URL_SEARCH
