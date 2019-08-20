@@ -12,19 +12,12 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 8. Create [New Google Spreadsheet](https://docs.google.com/spreadsheets/u/0/) and delete all row except first one and then edit cell A1 and insert `--END--`.
 9. Copy the `client_email` inside `client_secret.json`. Back in your spreadsheet, click the Share button in the top right, and paste the `client_email` value into the People field to give it edit rights. Hit Send.
 10. Get `sheet_id` from spreadsheet that you already made before. [How?](https://developers.google.com/sheets/api/guides/concepts#spreadsheet_id)
-11. Create `config.json` and put in this repo folder. Use this template:
+11. Open and change variable value in `_config.py` with yours.
   ```
-  {
-	"CWD":"YOUR_REPO_FILEPATH",
-	"URL_SEARCH":"https://www.nike.com/id/w/jordan-1-lifestyle-high-top-shoes-13jrmz4fokyz6lqy0zy7ok",
-	"TELEGRAM":{
-		"TOKEN":"YOUR_TELEGRAM_BOT_TOKEN",
-		"CHAT_ID":YOUR_TELEGRAM_CHAT_ID
-	},
-	"SHEET":{
-		"ID":"YOUR_SHEET_ID"
-	}
-  }
+ URL_SEARCH = 'https://www.nike.com/id/w/jordan-1-lifestyle-high-top-shoes-13jrmz4fokyz6lqy0zy7ok'
+ TELEGRAM_TOKEN = '<YOUR_BOT_TOKEN'
+ TELEGRAM_CHAT_ID = <YOUR_TELEGRAM_CHANNEL_CHAT_ID> #integer
+ SHEET_ID  = '<YOUR_SPREADSHEET_ID>'
   ```
   Edit this file with:
   * `CWD` : Current Working Directory. Change it with this repo [absolute file path](https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths) folder in your computer after cloning this repo (see [here](https://github.com/alionar/nikeid-telegram-scrapper/blob/master/README.md#run-it) how to clone).
