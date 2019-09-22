@@ -83,15 +83,28 @@ def get_detail_jordan1h():
     except:
         print("\tJordan 1 High: error")
 
+
 def filtering_result(list_of_result):
     if list_of_result != 0:
         fil_result = []
         for i in list_of_result:
             if i[2] == 'Women\'s Shoe' or i[2] == 'Men\'s Shoe':
-                fil_result.append(i)
+                if i[3] == 'Available':
+                    fil_result.append(i)
             else:
                 pass
         return fil_result
+
+
+def get_gc(cwd):
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('{}/client_secret.json'.format(cwd), scope)
+    gc = gspread.authorize(creds)
+    return gc
+
+
+# def anti_join(list_of_result):
+
 
 def send_channel(list_of_result):
     bot = telegram.Bot(token=token)
@@ -108,11 +121,11 @@ def send_channel(list_of_result):
     else:
         print("\tTelegram: nothing to send")
 
+
+
 def save_sheet(list_of_result):
     print("Saving to sheet...")
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('{}/client_secret.json'.format(cwd), scope)
-    gc = gspread.authorize(creds)
+    gc = get_gc(cwd)
     
     data = pd.DataFrame(list_of_result, columns=['date', 'product_name','category', 'status', 'color', 'price', 'price_before', 'link'])
     try:
@@ -126,10 +139,13 @@ def save_sheet(list_of_result):
         print('\tSheet: Failed')
         pass
 
+
 def main():
     print('{}\nRunning Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
     kirim_telegram = get_detail_jordan1h()
     kirim_telegram = filtering_result(kirim_telegram)
+    # tambahin untuk compare sheet dengan list_of_result
+
     print('\tResult: {} item(s)'.format(len(kirim_telegram)))
     if len(kirim_telegram) != 0:
         send_channel(kirim_telegram)
