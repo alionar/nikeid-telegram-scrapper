@@ -10,6 +10,7 @@ import os
 import pandas as pd
 import gspread_dataframe as gd
 from oauth2client.service_account import ServiceAccountCredentials
+from requests.auth import HTTPProxyAuth
 
 # SET LOCAL DATETIME: GMT +7
 my_date = datetime.datetime.now(pytz.timezone('{}'.format(TZ_NAME)))
@@ -74,7 +75,15 @@ def parsingSearchResult_v1(getResultPage):
 
 def get_detail_jordan1h():
     #getResultPage = requests.get('https://www.nike.com/id/w?q=air%20jordan%20high&vst=air%20jordan%20high')
-    getResultPage = requests.get(url_search)
+    s = requests.Session()
+
+    if PROXY_HTTP is not None and PROXY_HTTP != '':
+        s.trust_env=False
+        s.proxies = {"http": PROXY_HTTP,"https": PROXY_HTTPS}
+        if PROXY_USER is not None and PROXY_USER !='':
+            s.auth = HTTPProxyAuth(PROXY_USER, PROXY_PWD)
+    #getResultPage = requests.get(url_search, proxies=proxies)
+    getResultPage = s.get(url_search)
     getResultPage.raise_for_status()
     
     try:
