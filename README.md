@@ -19,6 +19,10 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
  TELEGRAM_CHAT_ID = <YOUR_TELEGRAM_CHANNEL_CHAT_ID> #integer
  SHEET_ID  = '<YOUR_SPREADSHEET_ID>'
  TZ_NAME = '<YOUR_TIMEZONE>'
+ PROXY_HTTP = ''
+ PROXY_HTTPS = ''
+ PROXY_USER = ''
+ PROXY_PWD = ''
   ```
   Edit this file with:
   * `URL_SEARCH` : URL Search for any Nike shoes available on Nike Store Indonesia. You can change it with another shoes.
