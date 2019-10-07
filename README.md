@@ -29,7 +29,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
   * `TELEGRAM_TOKEN` : Your Telegram Bot Token
   * `TELEGRAM_CHAT_ID` : Your Telegram Channel Chat ID
   * `SHEET_ID`: Your Spreadsheet ID
-  * `TZ_NAME`:  Your Timezone based on [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
+  * `TZ_NAME`:  Your Timezone based on Olson's [TZ Database Name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)
 
 ## Run It!
 1. Download this script using Terminal/Command Line.
