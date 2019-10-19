@@ -107,7 +107,7 @@ def filtering_result(list_of_result):
 
 def get_gc(cwd):
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('{}/client_secret.json'.format(cwd), scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
     gc = gspread.authorize(creds)
     return gc
 
