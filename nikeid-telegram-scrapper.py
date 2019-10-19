@@ -89,8 +89,8 @@ def get_detail_jordan1h():
     try:
         hasil = parsingSearchResult_v1(getResultPage)
         return hasil
-    except:
-        print("\tJordan 1 High: error")
+    except Exception as e:
+        print(f"\tJordan 1 High: {e}")
 
 
 def filtering_result(list_of_result):
