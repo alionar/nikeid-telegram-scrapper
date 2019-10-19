@@ -99,9 +99,12 @@ def filtering_result(list_of_result):
         for i in list_of_result:
             if i[2] == 'Women\'s Shoe' or i[2] == 'Men\'s Shoe':
                 if i[3] == 'Available':
-                    fil_result.append(i)
+                    exs = get_exsItem()
+                    if result[1] not in (item[1] for item in exs):
+                        fil_result.append(i)
             else:
                 pass
+
         return fil_result
 
 
@@ -112,7 +115,17 @@ def get_gc(cwd):
     return gc
 
 
-# def anti_join(list_of_result):
+def get_exsItem():
+    gc = get_gc(cwd)
+    ws = gc.open_by_key(sheet_id).worksheet('Sheet1')
+    df_exs = gd.get_as_dataframe(ws)
+    df_exs = df_exs[df_exs['date'] != '--END--']
+    lastDate = df_exs['date'].iloc[-1]
+    df_exs = df_exs[df_exs['date'] == lastDate]
+    df_exs = df_exs[['date', 'product_name', 'status']]
+    exs = [tuple(x) for x in df_exs.values]
+    
+    return exs
 
 
 def send_channel(list_of_result):
@@ -165,5 +178,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
