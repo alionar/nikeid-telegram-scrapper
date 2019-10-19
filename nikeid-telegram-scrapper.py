@@ -121,7 +121,6 @@ def send_channel(list_of_result):
     tanggal_skrg = my_date.strftime("%A, %d-%m-%Y")
 
     if list_of_result != 0:
-        #print("{}\nSearch Result For Air Jordan 1 High".format(tanggal_skrg))
         bot.sendMessage(chat_id=chat_id, text='`{} \nSearch Result For Air Jordan 1 High`'.format(tanggal_skrg), parse_mode=telegram.ParseMode.MARKDOWN)
         for idx, item in enumerate(list_of_result):
             text = '{7}. `{0}` *[{1}]*\n   {2} - {3}\n   Price: *{4}* // _{5}_\n{6}'.format(item[1], item[3], item[2], item[4], item[5], item[6], item[7], idx+1)
