@@ -164,7 +164,6 @@ def main():
     print('{}\nRunning Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
     kirim_telegram = get_detail_jordan1h()
     kirim_telegram = filtering_result(kirim_telegram)
-    # tambahin untuk compare sheet dengan list_of_result
 
     print('\tResult: {} item(s)'.format(len(kirim_telegram)))
     if len(kirim_telegram) != 0:
