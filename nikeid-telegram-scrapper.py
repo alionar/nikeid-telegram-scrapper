@@ -130,7 +130,6 @@ def get_exsItem():
 
 def send_channel(list_of_result):
     bot = telegram.Bot(token=token)
-    #now = datetime.date.today()
     tanggal_skrg = my_date.strftime("%A, %d-%m-%Y")
 
     if list_of_result != 0:
