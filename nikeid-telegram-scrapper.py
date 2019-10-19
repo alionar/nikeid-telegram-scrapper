@@ -143,7 +143,6 @@ def send_channel(list_of_result):
         print("\tTelegram: nothing to send")
 
 
-
 def save_sheet(list_of_result):
     print("Saving to sheet...")
     gc = get_gc(cwd)
