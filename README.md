@@ -3,7 +3,7 @@ Get daily reminder about certain Nike shoes stock on [Nike ID Store](https://www
 
 ## What to Prepare First?
 1. Install Python => 3.6
-2. Install dependencies `pip install -r  requirements.txt`
+2. Install dependencies `python3 -m pip install -r  requirements.txt`
 3. Create Telegram bot to get token. [How?](https://core.telegram.org/bots#6-botfather).
 4. Make new Telegram channel and add your bot to channel. [How?](https://telegram.org/faq_channels#q-what-39s-a-channel)
 5. Get your Telegram channel Chat ID. [How?](https://github.com/GabrielRF/telegram-id)
