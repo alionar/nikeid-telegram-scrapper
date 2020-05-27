@@ -24,13 +24,12 @@ cwd = os.getcwd()
 
 # FUNCTION
 def parsingSearchResult_v1(getResultPage):
-    #now = datetime.date.today()# - datetime.timedelta(days=1)
     tanggal = my_date.strftime("%d-%m-%Y")
     
     menu = bs4.BeautifulSoup(getResultPage.text, 'html.parser')
-    result = menu.find_all("div", class_="product-grid__items ta-lg-l pb9-sm pb0-lg css-1oud6ob")
+    result = menu.find_all("div", class_="product-grid__items css-yj4gxb css-r6is66 css-1tvazw1 css-1oud6ob")
     if len(result) == 1:
-        result_shoes = menu.find_all("div", class_="product-card css-ucpg4q ncss-col-sm-6 ncss-col-lg-4 va-sm-t product-grid__card")
+        result_shoes = menu.find_all("div", class_="product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card")
         if len(result) > 0:
             shoes_item = []
             for tag in result_shoes:
@@ -43,6 +42,16 @@ def parsingSearchResult_v1(getResultPage):
                     product_price_after = tag.find('div', class_='css-i260wg').text
                 else:
                     product_price_after = tag.find('div', class_='css-b9fpep').text
+                if '\xa0' in product_price_after:
+                    product_price_after = product_price_after.replace('\xa0', '')
+
+                # Sale Price
+                if tag.find('div', class_='css-31z3ik css-ndethb'):
+                    product_price_before = tag.find('div', class_='css-31z3ik css-ndethb').text
+                else:
+                    product_price_before = '-'
+                if '\xa0' in product_price_before:
+                    product_price_before = product_price_before.replace('\xa0', '')
     
                 # Product URL
                 if len(tag.find_all('a', class_='product-card__link-overlay')) == 1:
@@ -53,16 +62,12 @@ def parsingSearchResult_v1(getResultPage):
                 nike_site = 'https://www.nike.com'
                 url_link = '{0}{1}'.format(nike_site, url_location)
     
-                # Sale Price
-                if tag.find('div', class_='css-31z3ik css-ndethb'):
-                    product_price_before = tag.find('div', class_='css-31z3ik css-ndethb').text
-                else:
-                    product_price_before = '-'
-    
                 # Sold Out Status
                 if tag.find('div', class_='product-card__messaging has--message accent--color'):
                     soldout_status = tag.find('div', class_='product-card__messaging has--message accent--color').text
                 else:
+                    soldout_status = 'Available'
+                if soldout_status == '':
                     soldout_status = 'Available'
     
                 details = (tanggal, item_name, item_kind, soldout_status, available_color, product_price_after, product_price_before, url_link )
@@ -74,7 +79,6 @@ def parsingSearchResult_v1(getResultPage):
     
 
 def get_detail_jordan1h():
-    #getResultPage = requests.get('https://www.nike.com/id/w?q=air%20jordan%20high&vst=air%20jordan%20high')
     s = requests.Session()
 
     if PROXY_HTTP is not None and PROXY_HTTP != '':
@@ -112,18 +116,14 @@ def get_gc(cwd):
     return gc
 
 
-# def anti_join(list_of_result):
-
-
 def send_channel(list_of_result):
     bot = telegram.Bot(token=token)
-    #now = datetime.date.today()
     tanggal_skrg = my_date.strftime("%A, %d-%m-%Y")
 
     if list_of_result != 0:
-        bot.sendMessage(chat_id=chat_id, text='`{} \nSearch Result For Air Jordan 1 High`'.format(tanggal_skrg), parse_mode=telegram.ParseMode.MARKDOWN)
+        bot.sendMessage(chat_id=chat_id, text=f'`{tanggal_skrg} \nSearch Result For Air Jordan 1 High`', parse_mode=telegram.ParseMode.MARKDOWN)
         for idx, item in enumerate(list_of_result):
-            text = '{7}. `{0}` *[{1}]*\n   {2} - {3}\n   Price: *{4}* // _{5}_\n{6}'.format(item[1], item[3], item[2], item[4], item[5], item[6], item[7], idx+1)
+            text = f'{idx+1}. `{item[1]}` *[{item[3]}]*\n   {item[2]} - {item[4]}\n   Price: *{item[5]}* // *{item[6]}* \n{item[7]}'
             bot.sendMessage(chat_id=chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
         print("\tTelegram: done")
     else:
@@ -152,7 +152,6 @@ def main():
     print('{}\nRunning Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
     kirim_telegram = get_detail_jordan1h()
     kirim_telegram = filtering_result(kirim_telegram)
-    # tambahin untuk compare sheet dengan list_of_result
 
     print('\tResult: {} item(s)'.format(len(kirim_telegram)))
     if len(kirim_telegram) != 0:
