@@ -1,6 +1,6 @@
 from _config import *
+import time
 import bs4
-import requests
 import telegram
 import datetime
 import gspread
@@ -10,20 +10,35 @@ import os
 import pandas as pd
 import gspread_dataframe as gd
 from oauth2client.service_account import ServiceAccountCredentials
-from requests.auth import HTTPProxyAuth
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.expected_conditions import presence_of_element_located, invisibility_of_element_located
+from selenium.webdriver.chrome.options import Options
 
-# SET LOCAL DATETIME: GMT +7
+# SET LOCAL DATETIME
 my_date = datetime.datetime.now(pytz.timezone('{}'.format(TZ_NAME)))
 
 # _CONFIG.PY
+selenium_server = SELENIUM_SERVER
 url_search = URL_SEARCH
+shoe_type = SHOE_TYPE
 token = TELEGRAM_TOKEN
 chat_id = TELEGRAM_CHAT_ID
 sheet_id = SHEET_ID
 cwd = os.getcwd()
 
-# FUNCTION
-def _get_product_card():
+# HELPER FUNCTION
+def _get_gc(cwd):
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+    gc = gspread.authorize(creds)
+    return gc
+
+
+def _get_product_card(menu):
     product_card_tag = [
         "product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card",
         "product-card css-ucpg4q ncss-col-sm-6 ncss-col-lg-4 va-sm-t product-grid__card",
@@ -37,13 +52,48 @@ def _get_product_card():
     return check[0]
 
 
-def parsingSearchResult_v1(getResultPage):
+def _filtering_result(result):
+    if result != 0:
+        filtered_result = []
+        for i in result:
+            if i[2] in shoe_type:
+                if i[3] == 'Available':
+                    filtered_result.append(i)
+            else:
+                pass
+        return filtered_result
+
+
+def _scroll(driver, timeout):
+    # From: https://dev.to/hellomrspaceman/python-selenium-infinite-scrolling-3o12
+    scroll_pause_time = timeout
+
+    # Get scroll height
+    last_height = driver.execute_script("return document.body.scrollHeight")
+
+    while True:
+        # Scroll down to bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+        # Wait to load page
+        time.sleep(scroll_pause_time)
+
+        # Calculate new scroll height and compare with last scroll height
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            # If heights are the same it will exit the function
+            break
+        last_height = new_height
+
+
+# MAIN FUNCTION
+def parsing_result(driver_page_source):
     tanggal = my_date.strftime("%d-%m-%Y")
-    
-    menu = bs4.BeautifulSoup(getResultPage.text, 'html.parser')
+
+    menu = bs4.BeautifulSoup(driver_page_source, 'html')
     result = menu.find_all("div", class_="product-grid__items css-yj4gxb css-r6is66 css-1tvazw1 css-1oud6ob")
     if len(result) == 1:
-        result_shoes = _get_product_card()
+        result_shoes = _get_product_card(menu)
         if len(result) > 0:
             shoes_item = []
             for tag in result_shoes:
@@ -88,67 +138,62 @@ def parsingSearchResult_v1(getResultPage):
         else:
             shoes_item = []
     
-    return shoes_item
+        return shoes_item
 
 
-def get_detail_jordan1h():
-    s = requests.Session()
+def get_shoes(url):
+    options = Options()
+    options.page_load_strategy = 'normal'
 
-    if PROXY_HTTP is not None and PROXY_HTTP != '':
-        s.trust_env=False
-        s.proxies = {"http": PROXY_HTTP,"https": PROXY_HTTPS}
-        if PROXY_USER is not None and PROXY_USER !='':
-            s.auth = HTTPProxyAuth(PROXY_USER, PROXY_PWD)
-    #getResultPage = requests.get(url_search, proxies=proxies)
-    getResultPage = s.get(url_search)
-    getResultPage.raise_for_status()
-    
-    try:
-        hasil = parsingSearchResult_v1(getResultPage)
-        return hasil
-    except Exception as e:
-        print(f"\tJordan 1 High: {e}")
+    if RUN_IN_REMOTE == 'yes':
+        driver = webdriver.Remote(
+            command_executor=selenium_server,
+            desired_capabilities=DesiredCapabilities.FIREFOX,
+            options=options
+        )
+    else:
+        driver = webdriver.Firefox(
+            executable_path='./geckodriver',
+            desired_capabilities=DesiredCapabilities.FIREFOX,
+            options=options
+        )
 
+    wait = WebDriverWait(driver, 10)
 
-def filtering_result(list_of_result):
-    if list_of_result != 0:
-        fil_result = []
-        for i in list_of_result:
-            if i[2] == 'Women\'s Shoe' or i[2] == 'Men\'s Shoe':
-                if i[3] == 'Available':
-                    fil_result.append(i)
-            else:
-                pass
-        return fil_result
+    driver.get(url)
 
+    _scroll(driver, 5)
 
-def get_gc(cwd):
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-    gc = gspread.authorize(creds)
-    return gc
+    result = parsing_result(driver.page_source)
+    result = _filtering_result(result)
+
+    driver.quit()
+
+    return result
 
 
-def send_channel(list_of_result):
+def send_channel(shoe, result):
+    print(f'[i] Sending {shoe} result to Telegram Channel...')
     bot = telegram.Bot(token=token)
     tanggal_skrg = my_date.strftime("%A, %d-%m-%Y")
 
-    if list_of_result != 0:
-        bot.sendMessage(chat_id=chat_id, text=f'`{tanggal_skrg} \nSearch Result For Air Jordan 1 High`', parse_mode=telegram.ParseMode.MARKDOWN)
-        for idx, item in enumerate(list_of_result):
+    if result != 0:
+        bot.sendMessage(chat_id=chat_id, text=f'`{tanggal_skrg} \nSearch Result For {shoe}`', parse_mode=telegram.ParseMode.MARKDOWN)
+        for idx, item in enumerate(result):
             text = f'{idx+1}. `{item[1]}` *[{item[3]}]*\n   {item[2]} - {item[4]}\n   Price: *{item[5]}* // *{item[6]}* \n{item[7]}'
             bot.sendMessage(chat_id=chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
+            time.sleep(5)
         print("\tTelegram: done")
     else:
         print("\tTelegram: nothing to send")
 
 
 
-def save_sheet(list_of_result):
-    print("Saving to sheet...")
-    gc = get_gc(cwd)
+def save_sheet(shoe, result):
+    print(f"[i] Saving {shoe} result to sheet...")
+    gc = _get_gc(cwd)
     
-    data = pd.DataFrame(list_of_result, columns=['date', 'product_name','category', 'status', 'color', 'price', 'price_before', 'link'])
+    data = pd.DataFrame(result, columns=['date', 'product_name','category', 'status', 'color', 'price', 'price_before', 'link'])
     try:
         ws = gc.open_by_key(sheet_id).worksheet('Sheet1')
         end_flag = ws.find('--END--')
@@ -162,20 +207,24 @@ def save_sheet(list_of_result):
 
 
 def main():
-    print('{}\nRunning Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
-    kirim_telegram = get_detail_jordan1h()
-    kirim_telegram = filtering_result(kirim_telegram)
+    print('>> {}\n[i] Running Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
+    
+    for shoe, link in url_search.items():
+        print(f'[i]Fetching {shoe} products...')
+        try:    
+            result = get_shoes(link)
+            print(f'\t{shoe}: {len(result)} item(s)')
+            if len(result) != 0:
+                send_channel(shoe, result)
+                save_sheet(shoe, result)
+                
+                print('Done!')
+            else:
+                print("[i] No item available, skip...")
+                pass
+        except Exception as e:
+            print(e)
 
-    print('\tResult: {} item(s)'.format(len(kirim_telegram)))
-    if len(kirim_telegram) != 0:
-        send_channel(kirim_telegram)
-        save_sheet(kirim_telegram)
-        print('DONE!')
-    else:
-        print("No item available, exiting...")
-        quit()
 
 if __name__ == '__main__':
     main()
-
-
