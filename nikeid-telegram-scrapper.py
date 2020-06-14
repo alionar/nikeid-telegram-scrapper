@@ -23,25 +23,39 @@ sheet_id = SHEET_ID
 cwd = os.getcwd()
 
 # FUNCTION
+def _get_product_card():
+    product_card_tag = [
+        "product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card",
+        "product-card css-ucpg4q ncss-col-sm-6 ncss-col-lg-4 va-sm-t product-grid__card",
+        "product-card css-pm7x6j css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card"
+    ]
+    check = []
+    for tag in product_card_tag:
+        product_card = menu.find_all("div", class_=tag)
+        if len(product_card) > 0:
+            check.append(product_card)
+    return check[0]
+
+
 def parsingSearchResult_v1(getResultPage):
     tanggal = my_date.strftime("%d-%m-%Y")
     
     menu = bs4.BeautifulSoup(getResultPage.text, 'html.parser')
     result = menu.find_all("div", class_="product-grid__items css-yj4gxb css-r6is66 css-1tvazw1 css-1oud6ob")
     if len(result) == 1:
-        result_shoes = menu.find_all("div", class_="product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card")
+        result_shoes = _get_product_card()
         if len(result) > 0:
             shoes_item = []
             for tag in result_shoes:
                 item_name = tag.find('div', class_='product-card__title').text
                 item_kind = tag.find('div', class_='product-card__subtitle').text
                 available_color = tag.find('div', class_='product-card__product-count').text
-    
+
                 # Price
-                if tag.find('div', class_='css-i260wg'):
-                    product_price_after = tag.find('div', class_='css-i260wg').text
+                if tag.find('div', class_='css-s56yt7'):
+                    product_price_after = tag.find('div', class_='css-s56yt7').text
                 else:
-                    product_price_after = tag.find('div', class_='css-b9fpep').text
+                    product_price_after = tag.find('div', class_='css-11s12ax').text
                 if '\xa0' in product_price_after:
                     product_price_after = product_price_after.replace('\xa0', '')
 
@@ -59,9 +73,8 @@ def parsingSearchResult_v1(getResultPage):
                         url_location = link.get('href')
                 else:
                     url_location = None
-                nike_site = 'https://www.nike.com'
-                url_link = '{0}{1}'.format(nike_site, url_location)
-    
+                url_link = url_location
+
                 # Sold Out Status
                 if tag.find('div', class_='product-card__messaging has--message accent--color'):
                     soldout_status = tag.find('div', class_='product-card__messaging has--message accent--color').text
@@ -69,14 +82,14 @@ def parsingSearchResult_v1(getResultPage):
                     soldout_status = 'Available'
                 if soldout_status == '':
                     soldout_status = 'Available'
-    
+
                 details = (tanggal, item_name, item_kind, soldout_status, available_color, product_price_after, product_price_before, url_link )
                 shoes_item.append(details)
         else:
             shoes_item = []
     
     return shoes_item
-    
+
 
 def get_detail_jordan1h():
     s = requests.Session()
