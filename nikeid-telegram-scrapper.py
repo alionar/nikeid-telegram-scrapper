@@ -152,8 +152,13 @@ def get_shoes(url):
             options=options
         )
     else:
+        # https://github.com/mozilla/geckodriver/releases
+        if os.name == 'nt':
+            wd = os.getcwd() + '\\geckodriver.exe'
+        elif os.name == 'posix':
+            wd = os.getcwd() + './geckodriver'
         driver = webdriver.Firefox(
-            executable_path='./geckodriver',
+            executable_path=wd,
             desired_capabilities=DesiredCapabilities.FIREFOX,
             options=options
         )
