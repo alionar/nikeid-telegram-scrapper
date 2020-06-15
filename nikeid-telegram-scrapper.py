@@ -90,7 +90,7 @@ def _scroll(driver, timeout):
 def parsing_result(driver_page_source):
     tanggal = my_date.strftime("%d-%m-%Y")
 
-    menu = bs4.BeautifulSoup(driver_page_source, 'html')
+    menu = bs4.BeautifulSoup(driver_page_source, 'html.parser')
     result = menu.find_all("div", class_="product-grid__items css-yj4gxb css-r6is66 css-1tvazw1 css-1oud6ob")
     if len(result) == 1:
         result_shoes = _get_product_card(menu)
@@ -215,7 +215,7 @@ def main():
     print('>> {}\n[i] Running Nike@Telegram...'.format(my_date.strftime("%A, %d-%m-%Y")))
     
     for shoe, link in url_search.items():
-        print(f'[i]Fetching {shoe} products...')
+        print(f'[i] Fetching {shoe} products...')
         try:    
             result = get_shoes(link)
             print(f'\t{shoe}: {len(result)} item(s)')
