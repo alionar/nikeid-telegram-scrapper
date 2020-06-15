@@ -23,7 +23,7 @@ sheet_id = SHEET_ID
 cwd = os.getcwd()
 
 # FUNCTION
-def _get_product_card():
+def _get_product_card(menu):
     product_card_tag = [
         "product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card",
         "product-card css-ucpg4q ncss-col-sm-6 ncss-col-lg-4 va-sm-t product-grid__card",
@@ -43,7 +43,7 @@ def parsingSearchResult_v1(getResultPage):
     menu = bs4.BeautifulSoup(getResultPage.text, 'html.parser')
     result = menu.find_all("div", class_="product-grid__items css-yj4gxb css-r6is66 css-1tvazw1 css-1oud6ob")
     if len(result) == 1:
-        result_shoes = _get_product_card()
+        result_shoes = _get_product_card(menu)
         if len(result) > 0:
             shoes_item = []
             for tag in result_shoes:
