@@ -30,6 +30,7 @@ chat_id = TELEGRAM_CHAT_ID
 sheet_id = SHEET_ID
 cwd = os.getcwd()
 
+<<<<<<< HEAD
 # HELPER FUNCTION
 def _get_gc(cwd):
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -38,6 +39,9 @@ def _get_gc(cwd):
     return gc
 
 
+=======
+# FUNCTION
+>>>>>>> master
 def _get_product_card(menu):
     product_card_tag = [
         "product-card css-1y22mjo css-z5nr6i css-11ziap1 css-zk7jxt css-dpr2cn product-grid__card",
