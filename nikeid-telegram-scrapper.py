@@ -186,7 +186,7 @@ def send_channel(shoe, result):
         bot.sendMessage(chat_id=chat_id, text=f'`{tanggal_skrg} \nSearch Result For {shoe}`', parse_mode=telegram.ParseMode.MARKDOWN)
         for idx, item in enumerate(result):
             text = f'{idx+1}. `{item[1]}` *[{item[3]}]*\n   {item[2]} - {item[4]}\n   Price: *{item[5]}* // *{item[6]}* \n{item[7]}'
-            bot.sendMessage(chat_id=chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
+            bot.sendMessage(chat_id=chat_id, text=text, disable_notification=True, parse_mode=telegram.ParseMode.MARKDOWN)
             time.sleep(5)
         print("\tTelegram: done")
     else:
